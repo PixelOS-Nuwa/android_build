@@ -6362,7 +6362,11 @@ name := $(TARGET_PRODUCT)
 ifeq ($(TARGET_BUILD_TYPE),debug)
   name := $(name)_debug
 endif
-name := $(name)-target_files
+ifneq ($(strip $(CUSTOM_BUILD_DATE)),)
+  name := $(name)-$(CUSTOM_PLATFORM_VERSION)-$(CUSTOM_BUILD_DATE)-target_files
+else
+  name := $(name)-target_files
+endif
 
 intermediates := $(call intermediates-dir-for,PACKAGING,target_files)
 BUILT_TARGET_FILES_DIR := $(intermediates)/$(name).zip.list
